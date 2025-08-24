@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cricket Turf Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #FFC107;
+            --bg-color: #2c3e50;
+            --card-bg: #34495e;
+            --text-color: #ecf0f1;
+            --input-border: #7f8c8d;
+            --success-color: #2ecc71;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 450px;
+            width: 90%;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            animation: fadeInUp 1s ease-out;
+            border: 2px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin-bottom: 5px;
+            position: relative;
+        }
+        
+        h1::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 10px auto 20px;
+            border-radius: 2px;
+        }
+
+        p {
+            text-align: center;
+            color: var(--text-color);
+            font-size: 1.1em;
+            margin-bottom: 25px;
+        }
+        
+        p b {
+            color: var(--primary-color);
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 20px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 2px solid var(--input-border);
+            border-radius: 8px;
+            box-sizing: border-box;
+            background: #44586b;
+            color: var(--text-color);
+            font-size: 1em;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+            transform: scale(1.02);
+        }
+
+        input::placeholder {
+            color: #bdc3c7;
+        }
+
+        select option {
+            background: #34495e;
+            color: var(--text-color);
+        }
+
+        .captcha-container {
+            margin-top: 25px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-color);
+            font-size: 1.1em;
+        }
+
+        .captcha-box {
+            background: #f1f1f1;
+            color: #2c3e50;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.2em;
+            letter-spacing: 2px;
+            user-select: none;
+            text-decoration: line-through;
+            font-style: italic;
+        }
+
+        .otp-container {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        button {
+            margin-top: 30px;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary-color), #27ae60);
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #successMessage {
+            text-align: center;
+            color: var(--success-color);
+            font-weight: 700;
+            margin-top: 25px;
+            display: none;
+            animation: pulse 1.5s infinite;
+            padding: 15px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 10px;
+            border: 2px solid var(--success-color);
+            box-shadow: 0 0 15px var(--success-color);
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(46, 204, 113, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Birthday Cricket Turf Registration 🎉🏏</h1>
+        <p>Register now and join the fun on <b>17 August</b>!</p>
+        <form id="registrationForm">
+            <div id="formFields">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required />
+
+                <label for="email">Email ID</label>
+                <input type="email" id="email" name="email" required />
+
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" placeholder="10-digit number" />
+
+                <label for="team">Preferred Team</label>
+                <select id="team" name="team" required>
+                    <option value="">Select Team</option>
+                    <option value="Team A">Team A</option>
+                    <option value="Team B">Team B</option>
+                </select>
+
+                <div class="captcha-container">
+                    <span class="captcha-box" id="captchaText"></span>
+                    <input type="text" id="captchaInput" placeholder="Enter CAPTCHA" required style="width: 50%;" />
+                </div>
+            </div>
+
+            <button type="submit" id="registerButton">Register</button>
+
+            <div class="otp-container" id="otpContainer">
+                <p>An OTP has been sent to your number.</p>
+                <label for="otp">Enter OTP</label>
+                <input type="text" id="otp" name="otp" required placeholder="6-digit OTP" />
+                <button type="button" id="verifyButton">Verify & Complete Registration</button>
+            </div>
+        </form>
+        <p id="successMessage">✅ Registration Successful! See you at the turf!</p>
+    </div>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const formFields = document.getElementById('formFields');
+        const registerButton = document.getElementById('registerButton');
+        const verifyButton = document.getElementById('verifyButton');
+        const otpContainer = document.getElementById('otpContainer');
+        const successMsg = document.getElementById('successMessage');
+        const captchaText = document.getElementById('captchaText');
+        const captchaInput = document.getElementById('captchaInput');
+
+        let generatedCaptcha = '';
+        const serverUrl = 'http://localhost:3000'; // Change to your server URL in production
+
+        function generateCaptcha() {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            generatedCaptcha = '';
+            for (let i = 0; i < 6; i++) {
+                generatedCaptcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            captchaText.textContent = generatedCaptcha;
+        }
+        generateCaptcha();
+
+        // Step 1: Handle initial form submission to send OTP
+        registerButton.addEventListener('click', async (event) => {
+            event.preventDefault();
+
+            // Validate CAPTCHA
+            if (captchaInput.value !== generatedCaptcha) {
+                alert('Invalid CAPTCHA. Please try again.');
+                generateCaptcha();
+                return;
+            }
+
+            const phone = document.getElementById('phone').value;
+            registerButton.disabled = true;
+            registerButton.textContent = 'Sending OTP...';
+
+            try {
+                const response = await fetch(`${serverUrl}/api/send-otp`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone })
+                });
+
+                const data = await response.json();
+                if (data.status === 'success') {
+                    alert('OTP sent successfully. Please check your phone.');
+                    formFields.style.display = 'none';
+                    registerButton.style.display = 'none';
+                    otpContainer.style.display = 'block';
+                } else {
+                    alert('Failed to send OTP: ' + data.message);
+                }
+            } catch (error) {
+                alert('Error connecting to the server. Please try again.');
+                console.error('Fetch error:', error);
+            } finally {
+                registerButton.disabled = false;
+                registerButton.textContent = 'Register';
+            }
+        });
+
+        // Step 2: Handle OTP verification
+        verifyButton.addEventListener('click', async () => {
+            const enteredOTP = document.getElementById('otp').value;
+            const phone = document.getElementById('phone').value;
+            verifyButton.disabled = true;
+            verifyButton.textContent = 'Verifying...';
+
+            try {
+                const response = await fetch(`${serverUrl}/api/verify-otp`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, otp: enteredOTP })
+                });
+                
+                const data = await response.json();
+                if (data.status === 'success') {
+                    // Final registration submission to Formspree
+                    const formData = new FormData(form);
+                    formData.append('otp_verified', 'true');
+                    
+                    await fetch("https://formspree.io/f/xzzvogjv", {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    successMsg.style.display = 'block';
+                    form.reset();
+                    otpContainer.style.display = 'none';
+                    formFields.style.display = 'block';
+                    registerButton.style.display = 'block';
+                    generateCaptcha();
+                } else {
+                    alert('Invalid OTP: ' + data.message);
+                }
+            } catch (error) {
+                alert('Error connecting to the server. Please try again.');
+                console.error('Fetch error:', error);
+            } finally {
+                verifyButton.disabled = false;
+                verifyButton.textContent = 'Verify & Complete Registration';
+            }
+        });
+    </script>
+</body>
+</html>
